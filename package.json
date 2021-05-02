@@ -3,7 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production rimraf ./dist && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
+    "start": "cross-env NODE_ENV=production node dist/server.js",
+    "dev": "cross-env NODE_ENV=development tsnd -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "cross-env NODE_ENV=production test --passWithNoTests --runInBand --no-cache"
+  },
   "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^8.2.0",
+    "envalid": "^7.1.0",
     "fastify": "^3.15.1",
     "fastify-cors": "^6.0.0",
     "fastify-error": "^0.3.1",
@@ -11,15 +21,25 @@
     "fastify-oas": "^3.0.8",
     "fluent-json-schema": "^2.0.4",
     "module-alias": "^2.2.2",
+    "mongodb": "^3.6.6",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.14.0",
+    "@babel/node": "^7.13.13",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.13.8",
+    "@babel/plugin-proposal-optional-chaining": "^7.13.12",
+    "@babel/preset-env": "^7.14.0",
     "@babel/preset-typescript": "^7.13.0",
     "@shelf/jest-mongodb": "^1.2.4",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.0.1",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
+    "babel-jest": "^25.1.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "^7.25.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.22.1",
@@ -29,15 +49,6 @@
     "ts-node-dev": "^1.1.6",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.2.4"
-  },
-  "scripts": {
-    "build": "rimraf ./dist && tsc",
-    "start": "node dist/server.js",
-    "dev": "tsnd -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
-    "test": "jest --passWithNoTests --runInBand --no-cache"
-  },
-  "_moduleAliases": {
-    "@": "dist"
   },
   "repository": {
     "type": "git",

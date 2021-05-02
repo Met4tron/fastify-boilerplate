@@ -1,9 +1,11 @@
-import 'module-alias/register';
+import 'dotenv/config';
+import { app } from '@config/app';
+import { MongoHelper } from '@config/database';
+import { env } from '@config/env';
 
-import { app } from '@/config/app';
-
-app.ready().then((_) => {
-  app.listen(3000, () => {
-    app.log.info('API IS RUNNING!!');
-  });
-});
+MongoHelper.connect(env.MONGO_URI)
+  .then((_) => app.ready())
+  .then((_) => {
+    app.listen(3000);
+  })
+  .catch((err) => app.log.error(err));
